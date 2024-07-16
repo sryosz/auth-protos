@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package auth;
+
+option go_package = ".;authv1";
+
+service Auth{
+    rpc AuthorizeUser (AuthorizeUserRequest) returns (AuthorizeUserResponse);
+    rpc DeleteUser (DeleteUserRequest) returns (DeleteUserResponse);
+    rpc ResetUsersTokens (ResetUsersTokensRequest) returns (ResetUsersTokensResponse);
+    rpc AddUsersIP (AddUsersIPRequest) returns (AddUsersIPResponse);
+}
+
+message AuthorizeUserRequest{
+  int64 id = 1;
+  string password = 2;
+  string ip = 3;
+  bool is_license_enabled = 4;
+}
+
+message AuthorizeUserResponse{
+  string token = 1;
+}
+
+message DeleteUserRequest{
+  int64 id = 1;
+}
+
+message DeleteUserResponse{
+  string message = 1;
+}
+
+message ResetUsersTokensRequest{
+  int64 id = 1;
+}
+
+message ResetUsersTokensResponse{
+  string message = 1;
+}
+
+message AddUsersIPRequest{
+  int64 id = 1;
+  string ip = 2;
+}
+
+message AddUsersIPResponse{
+  string ip = 1;
+}
+
