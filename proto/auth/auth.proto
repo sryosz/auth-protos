@@ -1,24 +1,34 @@
 syntax = "proto3";
+option go_package = "../auth";
 
 package auth;
 
-option go_package = ".;authv1";
-
-service Auth{
+service AuthService{
     rpc AuthorizeUser (AuthorizeUserRequest) returns (AuthorizeUserResponse);
-    rpc DeleteUser (DeleteUserRequest) returns (DeleteUserResponse);
+    rpc AuthorizeUserByPass (AuthorizeUserByPassRequest) returns (AuthorizeUserByPassResponse);
     rpc ResetUsersTokens (ResetUsersTokensRequest) returns (ResetUsersTokensResponse);
     rpc AddUsersIP (AddUsersIPRequest) returns (AddUsersIPResponse);
 }
 
 message AuthorizeUserRequest{
   int64 id = 1;
-  string password = 2;
+  string passHashed = 2;
   string ip = 3;
   bool is_license_enabled = 4;
 }
 
 message AuthorizeUserResponse{
+  bool result = 1;
+}
+
+message AuthorizeUserByPassRequest{
+  int64 id = 1;
+  string password = 2;
+  string ip = 3;
+  bool is_license_enabled = 4;
+}
+
+message AuthorizeUserByPassResponse{
   string token = 1;
 }
 
@@ -44,6 +54,6 @@ message AddUsersIPRequest{
 }
 
 message AddUsersIPResponse{
-  string ip = 1;
+  string message = 1;
 }
 

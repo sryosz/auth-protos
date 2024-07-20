@@ -1,4 +1,4 @@
-module auth-protos
+module github.com/sryosz/auth-protos
 
 go 1.22
 
