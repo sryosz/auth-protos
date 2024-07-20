@@ -4,7 +4,7 @@
 // - protoc             v5.27.2
 // source: auth/auth.proto
 
-package authv1
+package auth
 
 import (
 	context "context"
@@ -18,194 +18,194 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// AuthClient is the client API for Auth service.
+// AuthServiceClient is the client API for AuthService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type AuthClient interface {
+type AuthServiceClient interface {
 	AuthorizeUser(ctx context.Context, in *AuthorizeUserRequest, opts ...grpc.CallOption) (*AuthorizeUserResponse, error)
-	DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*DeleteUserResponse, error)
+	AuthorizeUserByPass(ctx context.Context, in *AuthorizeUserByPassRequest, opts ...grpc.CallOption) (*AuthorizeUserByPassResponse, error)
 	ResetUsersTokens(ctx context.Context, in *ResetUsersTokensRequest, opts ...grpc.CallOption) (*ResetUsersTokensResponse, error)
 	AddUsersIP(ctx context.Context, in *AddUsersIPRequest, opts ...grpc.CallOption) (*AddUsersIPResponse, error)
 }
 
-type authClient struct {
+type authServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewAuthClient(cc grpc.ClientConnInterface) AuthClient {
-	return &authClient{cc}
+func NewAuthServiceClient(cc grpc.ClientConnInterface) AuthServiceClient {
+	return &authServiceClient{cc}
 }
 
-func (c *authClient) AuthorizeUser(ctx context.Context, in *AuthorizeUserRequest, opts ...grpc.CallOption) (*AuthorizeUserResponse, error) {
+func (c *authServiceClient) AuthorizeUser(ctx context.Context, in *AuthorizeUserRequest, opts ...grpc.CallOption) (*AuthorizeUserResponse, error) {
 	out := new(AuthorizeUserResponse)
-	err := c.cc.Invoke(ctx, "/auth.Auth/AuthorizeUser", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/auth.AuthService/AuthorizeUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *authClient) DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*DeleteUserResponse, error) {
-	out := new(DeleteUserResponse)
-	err := c.cc.Invoke(ctx, "/auth.Auth/DeleteUser", in, out, opts...)
+func (c *authServiceClient) AuthorizeUserByPass(ctx context.Context, in *AuthorizeUserByPassRequest, opts ...grpc.CallOption) (*AuthorizeUserByPassResponse, error) {
+	out := new(AuthorizeUserByPassResponse)
+	err := c.cc.Invoke(ctx, "/auth.AuthService/AuthorizeUserByPass", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *authClient) ResetUsersTokens(ctx context.Context, in *ResetUsersTokensRequest, opts ...grpc.CallOption) (*ResetUsersTokensResponse, error) {
+func (c *authServiceClient) ResetUsersTokens(ctx context.Context, in *ResetUsersTokensRequest, opts ...grpc.CallOption) (*ResetUsersTokensResponse, error) {
 	out := new(ResetUsersTokensResponse)
-	err := c.cc.Invoke(ctx, "/auth.Auth/ResetUsersTokens", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/auth.AuthService/ResetUsersTokens", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *authClient) AddUsersIP(ctx context.Context, in *AddUsersIPRequest, opts ...grpc.CallOption) (*AddUsersIPResponse, error) {
+func (c *authServiceClient) AddUsersIP(ctx context.Context, in *AddUsersIPRequest, opts ...grpc.CallOption) (*AddUsersIPResponse, error) {
 	out := new(AddUsersIPResponse)
-	err := c.cc.Invoke(ctx, "/auth.Auth/AddUsersIP", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/auth.AuthService/AddUsersIP", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// AuthServer is the server API for Auth service.
-// All implementations must embed UnimplementedAuthServer
+// AuthServiceServer is the server API for AuthService service.
+// All implementations must embed UnimplementedAuthServiceServer
 // for forward compatibility
-type AuthServer interface {
+type AuthServiceServer interface {
 	AuthorizeUser(context.Context, *AuthorizeUserRequest) (*AuthorizeUserResponse, error)
-	DeleteUser(context.Context, *DeleteUserRequest) (*DeleteUserResponse, error)
+	AuthorizeUserByPass(context.Context, *AuthorizeUserByPassRequest) (*AuthorizeUserByPassResponse, error)
 	ResetUsersTokens(context.Context, *ResetUsersTokensRequest) (*ResetUsersTokensResponse, error)
 	AddUsersIP(context.Context, *AddUsersIPRequest) (*AddUsersIPResponse, error)
-	mustEmbedUnimplementedAuthServer()
+	mustEmbedUnimplementedAuthServiceServer()
 }
 
-// UnimplementedAuthServer must be embedded to have forward compatible implementations.
-type UnimplementedAuthServer struct {
+// UnimplementedAuthServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedAuthServiceServer struct {
 }
 
-func (UnimplementedAuthServer) AuthorizeUser(context.Context, *AuthorizeUserRequest) (*AuthorizeUserResponse, error) {
+func (UnimplementedAuthServiceServer) AuthorizeUser(context.Context, *AuthorizeUserRequest) (*AuthorizeUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AuthorizeUser not implemented")
 }
-func (UnimplementedAuthServer) DeleteUser(context.Context, *DeleteUserRequest) (*DeleteUserResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteUser not implemented")
+func (UnimplementedAuthServiceServer) AuthorizeUserByPass(context.Context, *AuthorizeUserByPassRequest) (*AuthorizeUserByPassResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AuthorizeUserByPass not implemented")
 }
-func (UnimplementedAuthServer) ResetUsersTokens(context.Context, *ResetUsersTokensRequest) (*ResetUsersTokensResponse, error) {
+func (UnimplementedAuthServiceServer) ResetUsersTokens(context.Context, *ResetUsersTokensRequest) (*ResetUsersTokensResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ResetUsersTokens not implemented")
 }
-func (UnimplementedAuthServer) AddUsersIP(context.Context, *AddUsersIPRequest) (*AddUsersIPResponse, error) {
+func (UnimplementedAuthServiceServer) AddUsersIP(context.Context, *AddUsersIPRequest) (*AddUsersIPResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddUsersIP not implemented")
 }
-func (UnimplementedAuthServer) mustEmbedUnimplementedAuthServer() {}
+func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}
 
-// UnsafeAuthServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to AuthServer will
+// UnsafeAuthServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to AuthServiceServer will
 // result in compilation errors.
-type UnsafeAuthServer interface {
-	mustEmbedUnimplementedAuthServer()
+type UnsafeAuthServiceServer interface {
+	mustEmbedUnimplementedAuthServiceServer()
 }
 
-func RegisterAuthServer(s grpc.ServiceRegistrar, srv AuthServer) {
-	s.RegisterService(&Auth_ServiceDesc, srv)
+func RegisterAuthServiceServer(s grpc.ServiceRegistrar, srv AuthServiceServer) {
+	s.RegisterService(&AuthService_ServiceDesc, srv)
 }
 
-func _Auth_AuthorizeUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AuthService_AuthorizeUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AuthorizeUserRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServer).AuthorizeUser(ctx, in)
+		return srv.(AuthServiceServer).AuthorizeUser(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/auth.Auth/AuthorizeUser",
+		FullMethod: "/auth.AuthService/AuthorizeUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).AuthorizeUser(ctx, req.(*AuthorizeUserRequest))
+		return srv.(AuthServiceServer).AuthorizeUser(ctx, req.(*AuthorizeUserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Auth_DeleteUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteUserRequest)
+func _AuthService_AuthorizeUserByPass_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AuthorizeUserByPassRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServer).DeleteUser(ctx, in)
+		return srv.(AuthServiceServer).AuthorizeUserByPass(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/auth.Auth/DeleteUser",
+		FullMethod: "/auth.AuthService/AuthorizeUserByPass",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).DeleteUser(ctx, req.(*DeleteUserRequest))
+		return srv.(AuthServiceServer).AuthorizeUserByPass(ctx, req.(*AuthorizeUserByPassRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Auth_ResetUsersTokens_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AuthService_ResetUsersTokens_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ResetUsersTokensRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServer).ResetUsersTokens(ctx, in)
+		return srv.(AuthServiceServer).ResetUsersTokens(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/auth.Auth/ResetUsersTokens",
+		FullMethod: "/auth.AuthService/ResetUsersTokens",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).ResetUsersTokens(ctx, req.(*ResetUsersTokensRequest))
+		return srv.(AuthServiceServer).ResetUsersTokens(ctx, req.(*ResetUsersTokensRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Auth_AddUsersIP_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AuthService_AddUsersIP_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AddUsersIPRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServer).AddUsersIP(ctx, in)
+		return srv.(AuthServiceServer).AddUsersIP(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/auth.Auth/AddUsersIP",
+		FullMethod: "/auth.AuthService/AddUsersIP",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).AddUsersIP(ctx, req.(*AddUsersIPRequest))
+		return srv.(AuthServiceServer).AddUsersIP(ctx, req.(*AddUsersIPRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Auth_ServiceDesc is the grpc.ServiceDesc for Auth service.
+// AuthService_ServiceDesc is the grpc.ServiceDesc for AuthService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Auth_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "auth.Auth",
-	HandlerType: (*AuthServer)(nil),
+var AuthService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "auth.AuthService",
+	HandlerType: (*AuthServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "AuthorizeUser",
-			Handler:    _Auth_AuthorizeUser_Handler,
+			Handler:    _AuthService_AuthorizeUser_Handler,
 		},
 		{
-			MethodName: "DeleteUser",
-			Handler:    _Auth_DeleteUser_Handler,
+			MethodName: "AuthorizeUserByPass",
+			Handler:    _AuthService_AuthorizeUserByPass_Handler,
 		},
 		{
 			MethodName: "ResetUsersTokens",
-			Handler:    _Auth_ResetUsersTokens_Handler,
+			Handler:    _AuthService_ResetUsersTokens_Handler,
 		},
 		{
 			MethodName: "AddUsersIP",
-			Handler:    _Auth_AddUsersIP_Handler,
+			Handler:    _AuthService_AddUsersIP_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
